@@ -1,0 +1,117 @@
+import os
+
+os.system('cls')
+
+# Tentukan kamus untuk menyimpan barang jilbab dan harganya
+jilbab_items = {
+    'Pashmina Kaos': 30000,
+    'Bergo Sport': 20000,
+    'Voal Premium': 50000,
+    'Pashmina Silk': 30000,
+    'Inner Jilbab': 15000,
+    'Hijab Instan': 20000,
+    'Voal Syari': 30000
+}
+
+# Inisialisasi keranjang kosong sebagai daftar tuple (item, jumlah)
+keranjang = []
+
+# Fungsi untuk menampilkan barang jilbab yang dijual
+def tampilkan_barang():
+    print("Barang Jilbab yang Tersedia:")
+    for item, harga in jilbab_items.items():
+        print(f"{item}: Rp{harga}")
+
+# Fungsi untuk menambahkan barang ke keranjang
+def tambah_ke_keranjang(item, jumlah):
+    if item in jilbab_items:
+        keranjang.append((item, jumlah))
+        print(f"{jumlah} {item}(s) ditambahkan ke keranjang.")
+    else:
+        print("Barang tidak ditemukan dalam daftar jilbab.")
+
+# Fungsi untuk menghitung total harga
+def hitung_total():
+    total = 0
+    for item, jumlah in keranjang:
+        total += jilbab_items[item] * jumlah
+    return total
+
+# Menu admin
+def menu_admin():
+    while True:
+        print("\nMenu Admin:")
+        print("1. Tambah Barang Jilbab Baru")
+        print("2. Hapus Barang Jilbab")
+        print("3. Lihat Barang Jilbab")
+        print("4. Keluar dari Menu Admin")
+        
+        pilihan_admin = input("Masukkan pilihan Anda: ")
+        
+        if pilihan_admin == '1':
+            tambah_barang_baru()
+        elif pilihan_admin == '2':
+            hapus_barang()
+        elif pilihan_admin == '3':
+            tampilkan_barang()
+        elif pilihan_admin == '4':
+            break
+        else:
+            print("Pilihan tidak valid. Harap pilih opsi yang valid.")
+
+# Fungsi untuk menambahkan barang jilbab baru ke dalam daftar
+def tambah_barang_baru():
+    barang_baru = input("Masukkan nama barang jilbab baru: ")
+    harga_baru = int(input(f"Masukkan harga {barang_baru}: Rp"))
+    jilbab_items[barang_baru] = harga_baru
+    print(f"{barang_baru} ditambahkan ke daftar barang jilbab dengan harga Rp{harga_baru}.")
+
+# Fungsi untuk menghapus barang jilbab dari daftar
+def hapus_barang():
+    barang_yang_akan_dihapus = input("Masukkan nama barang jilbab yang akan dihapus: ")
+    if barang_yang_akan_dihapus in jilbab_items:
+        del jilbab_items[barang_yang_akan_dihapus]
+        print(f"{barang_yang_akan_dihapus} dihapus dari daftar barang jilbab.")
+    else:
+        print("Barang tidak ditemukan dalam daftar jilbab.")
+def check_out():
+    total_harga = hitung_total()
+    if total_harga > 0:
+        print("\n--- Struk Pembelian ---")
+        for item, jumlah in keranjang:
+            harga_item = jilbab_items[item]
+            subtotal = harga_item * jumlah
+            print(f"{item}: {jumlah} x Rp{harga_item} = Rp{subtotal}")
+        print(f"Total Harga: Rp{total_harga}")
+        print("-----------------------")
+        # Bersihkan keranjang setelah check out
+        keranjang.clear()
+    else:
+        print("Keranjang kosong. Silakan tambahkan barang ke keranjang terlebih dahulu.")
+
+# Loop program utama
+while True:
+    print("\nSelamat datang di Sistem Kasir Toko Jilbab")
+    print("1. Tampilkan Barang Jilbab")
+    print("2. Tambahkan Barang ke Keranjang")
+    print("3. Check Out")
+    print("4. Menu Admin")
+    print("5. Keluar")
+    
+    pilihan = input("Silakan masukkan pilihan Anda: ")
+
+    if pilihan == '1':
+        tampilkan_barang()
+    elif pilihan == '2':
+        item = input("Masukkan nama barang jilbab yang ingin Anda tambahkan: ")
+        jumlah = int(input("Masukkan jumlah: "))
+        tambah_ke_keranjang(item, jumlah)
+    elif pilihan == '3':
+        check_out()
+    elif pilihan == '4':
+        menu_admin()
+    elif pilihan == '5':
+        print("Terima kasih telah berbelanja. Selamat tinggal!")
+        break
+    else:
+        print("Pilihan tidak valid. Harap pilih opsi yang valid.")
